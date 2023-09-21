@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+        <UserSecretsId>bbd41ba5-48b8-42da-ae8f-d15fe19a48c2</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="scripts\objects.sql" />
+      <None Remove="scripts\resourcecmd.sql" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="scripts\objects.sql" />
+      <EmbeddedResource Include="scripts\resourcecmd.sql" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
+        <PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />
+        <PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
+        <PackageReference Include="coverlet.collector" Version="6.0.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\sqlexec\sqlexec.mapper.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="scripts\CreateTestDBObjects.sql">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="scripts\Execute2.sql">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+</Project>

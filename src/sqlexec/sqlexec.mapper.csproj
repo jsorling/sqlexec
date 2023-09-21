@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>Sorling.SqlExec</AssemblyName>
+        <RootNamespace>Sorling.SqlExec</RootNamespace>
+        <PackageIcon>NugetLogo.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageTags>SQL ORM</PackageTags>
+        <Version>0.8.0</Version>
+        <Authors>jsorling</Authors>
+        <Company>Sorling Systems</Company>
+        <Copyright>Sorling Systems @year</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryType>GIT</RepositoryType>
+        <PackageProjectUrl>https://github.com/jsorling/sqlexec</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/jsorling/sqlexec</RepositoryUrl>
+        <Description>sqlexec.mapper sqlexec.runner</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\README.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="NugetLogo.png">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
+
+</Project>
