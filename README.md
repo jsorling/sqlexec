@@ -1,5 +1,7 @@
 # sqlexec
 Sql server C# ORM
+## Nuget source
+https://pkgs.dev.azure.com/sorling/PublicFeed/_packaging/PublicFeed/nuget/v3/index.json
 ## Execute query
 ### Query from Sql statement
 ```C#
