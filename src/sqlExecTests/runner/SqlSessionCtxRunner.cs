@@ -1,7 +1,7 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
-using System;
 
 namespace sqlExecTests.runner;
 
@@ -9,10 +9,10 @@ internal class SqlSessionCtxRunner : SqlExecRunner
 {
    protected Dictionary<string, string> Keys { get; init; }
 
-   public SqlSessionCtxRunner(string sqlConnectionString, Dictionary<string, string> keys) : base(sqlConnectionString) 
+   public SqlSessionCtxRunner(string sqlConnectionString, Dictionary<string, string> keys) : base(sqlConnectionString)
       => Keys = keys ?? throw new ArgumentNullException(nameof(keys));
 
-   protected override async Task OpenConnectionAsync(SqlConnection sqlConnection, CancellationToken cancellationToken) { 
+   protected override async Task OpenConnectionAsync(SqlConnection sqlConnection, CancellationToken cancellationToken) {
       await base.OpenConnectionAsync(sqlConnection, cancellationToken);
       if (Keys.Any()) {
          SqlCommand sc = sqlConnection.CreateCommand();
