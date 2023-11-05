@@ -7,17 +7,20 @@ public class EnumMapper : TypeMapperBase
 {
    private readonly Type _enumType;
 
-   public override SqlDbType SqlDbType => SqlDbType.Int;
+   public override SqlDbType SqlDbType => SqlDbType.BigInt;
 
    public override bool IsNullable { get; init; }
 
    public EnumMapper(bool isNullAble, Type enumType) {
       IsNullable = isNullAble;
-      _enumType = enumType;
+      _enumType = enumType.IsEnum ? enumType 
+         : (Nullable.GetUnderlyingType(enumType)?.IsEnum ?? false) 
+         ?  Nullable.GetUnderlyingType(enumType)! 
+         : throw new ArgumentOutOfRangeException(nameof(enumType));
    }
 
    public override object? GetInstanceValue(object? instance)
-     => instance is null
+     => instance is null or DBNull
       ? null
       : Enum.ToObject(_enumType, instance);
 

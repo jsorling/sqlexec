@@ -75,7 +75,7 @@ public static class MapType
       ? new ByteArrayMapper(isNullable ?? IsTypeNullable(type) ?? true)
       : type == typeof(char?[])
       ? new CharArrayMapper(isNullable ?? IsTypeNullable(type) ?? true)
-      : type.IsEnum
+      : type.IsEnum || (Nullable.GetUnderlyingType(type)?.IsEnum ?? false)
       ? new EnumMapper(isNullable ?? IsTypeNullable(type) ?? true, type)
       : throw new NotSupportedException($"No parameter mapper found for type '{type.FullName}'");
 }

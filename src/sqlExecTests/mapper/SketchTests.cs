@@ -19,19 +19,6 @@ public class SketchTests
    [TestMethod]
    public void MapRow() {
       using SqlConnection con = TestsInitialize.Connection;
-      //using SqlCommand com = con.CreateCommand();
-      //com.CommandText = "select cast(1 as int), 's'";
-      //com.CommandType = CommandType.Text;
-      //con.Open();
-      //using SqlDataReader reader = com.ExecuteReader();
-      //AnintAstring? aa = reader.ReadRecordSetAsync<AnintAstring>().Result.FirstOrDefault();
-      //reader.Close();
-
-      //Assert.IsNotNull(aa);
-      //Assert.IsTrue(aa.AnInt == 1);
-      //Assert.IsTrue(aa.Astring == "s");
-      //Assert.IsTrue(MapCommand<ACommand>.ParamCount() > 0);
-
       using SqlCommand com2 = con.CreateCommand();
 
       ACommand com3 = new(1, "2");
