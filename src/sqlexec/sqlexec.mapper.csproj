@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>disable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AssemblyName>Sorling.SqlExec</AssemblyName>
@@ -9,7 +9,7 @@
         <PackageIcon>NugetLogo.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>SQL ORM</PackageTags>
-        <Version>0.8.2.0</Version>
+        <Version>0.9.1.0</Version>
         <Authors>jsorling</Authors>
         <Company>Sorling Systems</Company>
         <Copyright>Sorling Systems @year</Copyright>
