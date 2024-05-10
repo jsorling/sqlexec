@@ -17,6 +17,13 @@ public class ByteTests
       Assert.IsTrue(o == 3);
    }
 
+   [TestMethod]
+   public void ByteNonNullableScalar() {
+      SqlExecRunner runner = new(TestsInitialize.ConnectionString);
+      byte o = runner.ExecuteScalar<byte, ByteCommand>(new());
+      Assert.IsTrue(o == 3);
+   }
+
    public record NullByteCommand() : SqlExecBaseCommand
    {
       public override CommandType SqlExecCommandType => CommandType.Text;

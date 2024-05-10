@@ -16,6 +16,13 @@ public class FloatTests
       Assert.IsTrue((int)o!.Value == 8);
    }
 
+   [TestMethod]
+   public void FloatNonNullableScalar() {
+      SqlExecRunner runner = new(TestsInitialize.ConnectionString);
+      float o = runner.ExecuteScalar<float, FloatCommand>(new());
+      Assert.IsTrue((int)o == 8);
+   }
+
    public record NullFloatCommand() : SqlExecBaseCommand
    {
       public override CommandType SqlExecCommandType => CommandType.Text;

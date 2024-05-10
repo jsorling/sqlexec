@@ -40,7 +40,7 @@ public static class MapType
       : type == typeof(DateTimeOffset)
       ? new DateTimeOffsetMapper(isNullable ?? IsTypeNullable(type) ?? false)
       : type == typeof(TimeSpan)
-      ? new DateTimeOffsetMapper(isNullable ?? IsTypeNullable(type) ?? true)
+      ? new TimeSpanMapper(isNullable ?? IsTypeNullable(type) ?? true)
       : type == typeof(byte[])
       ? new ByteArrayMapper(isNullable ?? IsTypeNullable(type) ?? false)
       : type == typeof(char[])

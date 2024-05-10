@@ -17,6 +17,13 @@ public class DecimalTests
       Assert.IsTrue(o != null);
    }
 
+   [TestMethod]
+   public void DecimalNonNullableScalar() {
+      SqlExecRunner runner = new(TestsInitialize.ConnectionString);
+      decimal o = runner.ExecuteScalar<decimal, DecimalCommand>(new());
+      Assert.IsTrue((int)o == 8);
+   }
+
    public record NullDecimalCommand() : SqlExecBaseCommand
    {
       public override CommandType SqlExecCommandType => CommandType.Text;

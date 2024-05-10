@@ -9,7 +9,7 @@ public class TimeSpanTests
    {
       public override CommandType SqlExecCommandType => CommandType.Text;
 
-      public override string SqlExecSqlText => "select cast('12:34:54.1237' as time)";
+      public override string SqlExecSqlText => "select cast('11:22:33.1237' as time)";
    }
 
    [TestMethod]
@@ -17,6 +17,13 @@ public class TimeSpanTests
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       TimeSpan? o = runner.ExecuteScalar<TimeSpan?, TimeSpanCommand>(new());
       Assert.IsTrue(o != null);
+   }
+
+   [TestMethod]
+   public void TimeNonNullableSpanScalar() {
+      SqlExecRunner runner = new(TestsInitialize.ConnectionString);
+      TimeSpan o = runner.ExecuteScalar<TimeSpan, TimeSpanCommand>(new());
+      Assert.IsTrue(o.Hours == 11);
    }
 
    public record NullTimeSpanCommand() : SqlExecBaseCommand

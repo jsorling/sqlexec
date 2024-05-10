@@ -17,6 +17,13 @@ public class BoolTests
       Assert.IsTrue(o);
    }
 
+   [TestMethod]
+   public void BoolNonNullableScalar() {
+      SqlExecRunner runner = new(TestsInitialize.ConnectionString);
+      bool o = runner.ExecuteScalar<bool, BoolCommand>(new());
+      Assert.IsTrue(o);
+   }
+
    public record NullBoolCommand() : SqlExecBaseCommand
    {
       public override CommandType SqlExecCommandType => CommandType.Text;

@@ -15,8 +15,15 @@ public class DateTimeOffsetTests
    [TestMethod]
    public void DateTimeOffsetScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
-      DateTimeOffset? o = runner.ExecuteScalar<DateTimeOffset?, DateTimeOffsetCommand>(new());
-      Assert.IsTrue(o != null);
+      DateTimeOffset o = runner.ExecuteScalar<DateTimeOffset, DateTimeOffsetCommand>(new());
+      Assert.IsTrue(o.DayOfYear == 344);
+   }
+
+   [TestMethod]
+   public void DateTimeOffsetNonNullableScalar() {
+      SqlExecRunner runner = new(TestsInitialize.ConnectionString);
+      DateTimeOffset o = runner.ExecuteScalar<DateTimeOffset, DateTimeOffsetCommand>(new());
+      Assert.IsTrue(o.Hour == 12);
    }
 
    public record NullDateTimeOffsetCommand() : SqlExecBaseCommand

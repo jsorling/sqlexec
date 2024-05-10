@@ -17,6 +17,13 @@ public class LongTests
       Assert.IsTrue(o == 123);
    }
 
+   [TestMethod]
+   public void LongNonNullableScalar() {
+      SqlExecRunner runner = new(TestsInitialize.ConnectionString);
+      long o = runner.ExecuteScalar<long, LongCommand>(new());
+      Assert.IsTrue(o == 123);
+   }
+
    public record NullLongCommand() : SqlExecBaseCommand
    {
       public override CommandType SqlExecCommandType => CommandType.Text;

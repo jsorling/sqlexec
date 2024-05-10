@@ -8,10 +8,7 @@ public class MapScalar<T>
    private static readonly ITypeMapper _typeMap;
 
    static MapScalar() {
-      ITypeMapper? typemapper = MapType.GetTypeMapper(typeof(T));
-
-      if (typemapper is null || !typemapper.IsNullable)
-         throw new NotSupportedException();
+      ITypeMapper? typemapper = MapType.GetTypeMapper(typeof(T)) ?? throw new NotSupportedException();
       _typeMap = typemapper;
    }
 

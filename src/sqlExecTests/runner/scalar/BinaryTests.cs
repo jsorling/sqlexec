@@ -17,6 +17,15 @@ public class BinaryTests
       Assert.IsTrue(o?.Length > 0);
    }
 
+   [TestMethod]
+   public void BinaryNonNullableScalar() {
+      SqlExecRunner runner = new(TestsInitialize.ConnectionString);
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+      byte[] o = runner.ExecuteScalar<byte[], BinaryCommand>(new());
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+      Assert.IsTrue(o?.Length > 0);
+   }
+
    public record NullBinaryCommand() : SqlExecBaseCommand
    {
       public override CommandType SqlExecCommandType => CommandType.Text;

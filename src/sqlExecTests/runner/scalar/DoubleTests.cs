@@ -17,6 +17,13 @@ public class DoubleTests
       Assert.IsTrue(o != null);
    }
 
+   [TestMethod]
+   public void DoubleNonNullableScalar() {
+      SqlExecRunner runner = new(TestsInitialize.ConnectionString);
+      double o = runner.ExecuteScalar<double, DoubleCommand>(new());
+      Assert.IsTrue((int)o == 8);
+   }
+
    public record NullDoubleCommand() : SqlExecBaseCommand
    {
       public override CommandType SqlExecCommandType => CommandType.Text;

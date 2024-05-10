@@ -17,6 +17,13 @@ public class ShortTests
       Assert.IsTrue(o == 3);
    }
 
+   [TestMethod]
+   public void ShortNonNullableScalar() {
+      SqlExecRunner runner = new(TestsInitialize.ConnectionString);
+      short o = runner.ExecuteScalar<short, ShortCommand>(new());
+      Assert.IsTrue(o == 3);
+   }
+
    public record NullShortCommand() : SqlExecBaseCommand
    {
       public override CommandType SqlExecCommandType => CommandType.Text;

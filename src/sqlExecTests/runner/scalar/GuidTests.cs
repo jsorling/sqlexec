@@ -9,7 +9,7 @@ public class GuidTests
    {
       public override CommandType SqlExecCommandType => CommandType.Text;
 
-      public override string SqlExecSqlText => "select newid()";
+      public override string SqlExecSqlText => "select cast('{3E824192-5C06-4D93-96BE-570E8A0F4029}' as uniqueidentifier)";
    }
 
    [TestMethod]
@@ -17,6 +17,13 @@ public class GuidTests
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       Guid? o = runner.ExecuteScalar<Guid?, GuidCommand>(new());
       Assert.IsTrue(o != null);
+   }
+
+   [TestMethod]
+   public void GuidNonNullableScalar() {
+      SqlExecRunner runner = new(TestsInitialize.ConnectionString);
+      Guid o = runner.ExecuteScalar<Guid, GuidCommand>(new());
+      Assert.IsTrue(o == Guid.Parse("{3E824192-5C06-4D93-96BE-570E8A0F4029}"));
    }
 
    public record NullGuidCommand() : SqlExecBaseCommand

@@ -17,6 +17,15 @@ public class CharArrayTests
       Assert.IsTrue(o != null);
    }
 
+   [TestMethod]
+   public void CharArrayNonNullableScalar() {
+      SqlExecRunner runner = new(TestsInitialize.ConnectionString);
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+      char[] o = runner.ExecuteScalar<char[], CharArrayCommand>(new());
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+      Assert.IsTrue(o != null);
+   }
+
    public record NullCharArrayCommand() : SqlExecBaseCommand
    {
       public override CommandType SqlExecCommandType => CommandType.Text;

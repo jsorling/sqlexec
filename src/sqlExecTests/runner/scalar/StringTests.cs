@@ -17,6 +17,15 @@ public class StringTests
       Assert.IsTrue(o == "123");
    }
 
+   [TestMethod]
+   public void StringNonNullableScalar() {
+      SqlExecRunner runner = new(TestsInitialize.ConnectionString);
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+      string o = runner.ExecuteScalar<string, StringCommand>(new());
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+      Assert.IsTrue(o == "123");
+   }
+
    public record NullStringCommand() : SqlExecBaseCommand
    {
       public override CommandType SqlExecCommandType => CommandType.Text;

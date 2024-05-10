@@ -9,7 +9,7 @@ public class DateTimeTests
    {
       public override CommandType SqlExecCommandType => CommandType.Text;
 
-      public override string SqlExecSqlText => "select getdate()";
+      public override string SqlExecSqlText => "select cast('2005-10-21' as date)";
    }
 
    [TestMethod]
@@ -17,6 +17,13 @@ public class DateTimeTests
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       DateTime? o = runner.ExecuteScalar<DateTime?, DateTimeCommand>(new());
       Assert.IsTrue(o != null);
+   }
+
+   [TestMethod]
+   public void DateTimeNonNullableScalar() {
+      SqlExecRunner runner = new(TestsInitialize.ConnectionString);
+      DateTime o = runner.ExecuteScalar<DateTime, DateTimeCommand>(new());
+      Assert.IsTrue(o.Year == 2005);
    }
 
    public record NullDateTimeCommand() : SqlExecBaseCommand

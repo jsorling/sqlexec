@@ -17,6 +17,13 @@ public class CharTests
       Assert.IsTrue(o != null);
    }
 
+   [TestMethod]
+   public void CharNonNullableScalar() {
+      SqlExecRunner runner = new(TestsInitialize.ConnectionString);
+      char o = runner.ExecuteScalar<char, CharCommand>(new());
+      Assert.IsTrue(o == '1');
+   }
+
    public record NullCharCommand() : SqlExecBaseCommand
    {
       public override CommandType SqlExecCommandType => CommandType.Text;

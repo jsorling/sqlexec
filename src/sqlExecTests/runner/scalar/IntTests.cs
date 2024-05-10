@@ -17,6 +17,13 @@ public class IntTests
       Assert.IsTrue(o == 3);
    }
 
+   [TestMethod]
+   public void IntNonNullableScalar() {
+      SqlExecRunner runner = new(TestsInitialize.ConnectionString);
+      int o = runner.ExecuteScalar<int, IntCommand>(new());
+      Assert.IsTrue(o == 3);
+   }
+
    public record NullIntCommand() : SqlExecBaseCommand
    {
       public override CommandType SqlExecCommandType => CommandType.Text;
