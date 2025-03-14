@@ -1,4 +1,4 @@
-name: Build and deploy to Azure public feed
+name: Build, pack and deploy to Azure public feed
 on:
   workflow_dispatch:
 env:
