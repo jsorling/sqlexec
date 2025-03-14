@@ -30,4 +30,4 @@ jobs:
         name: nugetpkg
         path: ${{ env.NUGET_PACKAGE_PATH }}  
     - name: Push nuget
-      run: dotnet nuget push --api-key AzureArtifacts --source sorling_public "${{ env.NUGET_PACKAGE_PATH }}/**/*.nupkg"
+      run: dotnet nuget push --api-key AzureArtifacts --source sorlingpublic "${{ env.NUGET_PACKAGE_PATH }}/**/*.nupkg"
