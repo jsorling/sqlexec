@@ -7,7 +7,7 @@ env:
   DOTNET_CORE_VERSION: 9.0.x
   WORKING_DIRECTORY: .
   PS_SOURCE_URL: "https://raw.githubusercontent.com/jsorling/miscscripts/main/github/actions"
-  NUGET_AUTH_TOKEN: ${{ secrets.AZURE_DEVOPS_TOKEN }}
+  NUGET_AUTH_TOKEN: ${{ secrets.AZPUBLICFEEDPAT }}
   AZURE_ARTIFACTS_FEED_URL: "https://pkgs.dev.azure.com/sorling/PublicFeed/_packaging/PublicFeed/nuget/v3/index.json"
 jobs:
   build:
