@@ -7,6 +7,8 @@ env:
   DOTNET_CORE_VERSION: 9.0.x
   WORKING_DIRECTORY: .
   PS_SOURCE_URL: "https://raw.githubusercontent.com/jsorling/miscscripts/main/github/actions"
+  NUGET_AUTH_TOKEN: ${{ secrets.AZURE_DEVOPS_TOKEN }}
+  AZURE_ARTIFACTS_FEED_URL: "https://pkgs.dev.azure.com/sorling/PublicFeed/_packaging/PublicFeed/nuget/v3/index.json"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,19 +31,18 @@ jobs:
         name: nugetpkg
         path: ${{ env.NUGET_PACKAGE_PATH }}
   deploy:
-  # https://learn.microsoft.com/en-us/azure/devops/artifacts/quickstarts/github-actions?view=azure-devops
     runs-on: ubuntu-latest
     needs: build
     steps:
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3.3.1
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+        source-url: ${{ env.AZURE_ARTIFACTS_FEED_URL }}
     - name: Download artifact from build job
       uses: actions/download-artifact@v4.1.9
       with:
         name: nugetpkg
         path: ${{ env.NUGET_PACKAGE_PATH }}
-    #- name: Set nuget add sources
-      # nuget sources Add -Name azurepublic -Source https://pkgs.dev.azure.com/sorling/PublicFeed/_packaging/PublicFeed/nuget/v3/index.json -UserName "" -Password ${{ secrets.azpublicfeedpat }} -config <PATH_TO_NUGET_CONFIG_FILE>
-      #run: nuget sources Add -Name "azurepublic" -Source https://pkgs.dev.azure.com/sorling/PublicFeed/_packaging/PublicFeed/nuget/v3/index.json -UserName "jsorling" -Password ${{ secrets.azpublicfeedpat }}
-    #- name: Push nuget
-      #run: nuget push "${{ env.NUGET_PACKAGE_PATH }}/**/*.nupkg" -src azurepublic -ApiKey AZ
     - name: Push nuget
-      run: dotnet nuget push "${{ env.NUGET_PACKAGE_PATH }}/**/*.nupkg" --api-key ${{ secrets.azpublicfeedpat }} --source "https://pkgs.dev.azure.com/sorling/PublicFeed/_packaging/PublicFeed/nuget/v3/index.json"
+      run: dotnet nuget push --api-key AzureArtifacts "${{ env.NUGET_PACKAGE_PATH }}/**/*.nupkg"
