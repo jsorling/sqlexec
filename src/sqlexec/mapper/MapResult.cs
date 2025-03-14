@@ -1,7 +1,7 @@
 ﻿using Sorling.SqlExec.mapper.results;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 
@@ -36,8 +36,7 @@ internal static class MapResult<T> where T : SqlExecBaseResult
    }
 
    public static T MapRow(SqlDataReader sqlDataReader) {
-      if (sqlDataReader is null)
-         throw new ArgumentNullException(nameof(sqlDataReader));
+      ArgumentNullException.ThrowIfNull(sqlDataReader);
       object?[] args = new object[_parametercount];
 
       for (int i = 0; i < _parametercount; i++) {

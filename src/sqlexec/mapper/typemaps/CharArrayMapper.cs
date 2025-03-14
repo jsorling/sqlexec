@@ -1,15 +1,13 @@
 ﻿using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace Sorling.SqlExec.mapper.typemaps;
 
-public class CharArrayMapper : TypeMapperBase
+public class CharArrayMapper(bool isNullAble) : TypeMapperBase
 {
    public override SqlDbType SqlDbType => SqlDbType.Char;
 
-   public override bool IsNullable { get; init; }
-
-   public CharArrayMapper(bool isNullAble) => IsNullable = isNullAble;
+   public override bool IsNullable { get; init; } = isNullAble;
 
    public override object? GetInstanceValue(object? instance)
      => instance is string str ? str.ToCharArray() : null;

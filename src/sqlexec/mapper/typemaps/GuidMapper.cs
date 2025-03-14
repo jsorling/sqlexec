@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace Sorling.SqlExec.mapper.typemaps;
 
-public class GuidMapper : TypeMapperBase
+public class GuidMapper(bool isNullAble) : TypeMapperBase
 {
    public override SqlDbType SqlDbType => SqlDbType.UniqueIdentifier;
 
-   public override bool IsNullable { get; init; }
-
-   public GuidMapper(bool isNullAble) => IsNullable = isNullAble;
+   public override bool IsNullable { get; init; } = isNullAble;
 
    public override object? GetInstanceValue(object? instance)
      => instance is not Guid ? null : instance;

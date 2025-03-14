@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace Sorling.SqlExec.mapper.typemaps;
-public class EnumMapper : TypeMapperBase
+public class EnumMapper(bool isNullAble, Type enumType) : TypeMapperBase
 {
-   private readonly Type _enumType;
+   private readonly Type _enumType = enumType.IsEnum ? enumType
+         : (Nullable.GetUnderlyingType(enumType)?.IsEnum ?? false)
+         ? Nullable.GetUnderlyingType(enumType)!
+         : throw new ArgumentOutOfRangeException(nameof(enumType));
 
    public override SqlDbType SqlDbType => SqlDbType.BigInt;
 
-   public override bool IsNullable { get; init; }
-
-   public EnumMapper(bool isNullAble, Type enumType) {
-      IsNullable = isNullAble;
-      _enumType = enumType.IsEnum ? enumType 
-         : (Nullable.GetUnderlyingType(enumType)?.IsEnum ?? false) 
-         ?  Nullable.GetUnderlyingType(enumType)! 
-         : throw new ArgumentOutOfRangeException(nameof(enumType));
-   }
+   public override bool IsNullable { get; init; } = isNullAble;
 
    public override object? GetInstanceValue(object? instance)
      => instance is null or DBNull

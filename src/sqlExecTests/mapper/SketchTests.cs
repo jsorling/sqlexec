@@ -1,6 +1,6 @@
 ﻿using Sorling.SqlExec.mapper;
 using System;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace sqlExecTests.mapper;
 

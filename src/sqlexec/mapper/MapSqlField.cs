@@ -17,8 +17,7 @@ internal class MapSqlField
    public bool IsNullable => ValueGetter.IsNullable;
 
    public MapSqlField(ParameterInfo parameterInfo) {
-      if (parameterInfo is null)
-         throw new ArgumentNullException(nameof(parameterInfo));
+      ArgumentNullException.ThrowIfNull(parameterInfo);
 
       NullabilityInfo nainfo = _nullabilityctx.Create(parameterInfo);
       bool isnullable = nainfo.WriteState == NullabilityState.Nullable

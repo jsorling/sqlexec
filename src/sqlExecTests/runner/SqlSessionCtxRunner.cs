@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace sqlExecTests.runner;
 
-internal class SqlSessionCtxRunner : SqlExecRunner
+internal class SqlSessionCtxRunner(string sqlConnectionString, Dictionary<string, string> keys) : SqlExecRunner(sqlConnectionString)
 {
-   protected Dictionary<string, string> Keys { get; init; }
-
-   public SqlSessionCtxRunner(string sqlConnectionString, Dictionary<string, string> keys) : base(sqlConnectionString)
-      => Keys = keys ?? throw new ArgumentNullException(nameof(keys));
+   protected Dictionary<string, string> Keys { get; init; } = keys ?? throw new ArgumentNullException(nameof(keys));
 
    protected override async Task OpenConnectionAsync(SqlConnection sqlConnection, CancellationToken cancellationToken) {
       await base.OpenConnectionAsync(sqlConnection, cancellationToken);
-      if (Keys.Any()) {
+      if (Keys.Count != 0) {
          SqlCommand sc = sqlConnection.CreateCommand();
          string cmdtxt = string.Empty;
          foreach (KeyValuePair<string, string> key in Keys) {

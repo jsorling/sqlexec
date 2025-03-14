@@ -1,6 +1,6 @@
 ﻿using Sorling.SqlExec.mapper.results;
 using System;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace Sorling.SqlExec.mapper.extensions;
 

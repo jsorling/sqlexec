@@ -4,7 +4,7 @@ using Sorling.SqlExec.mapper.extensions;
 using Sorling.SqlExec.mapper.results;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -12,12 +12,9 @@ using System.Threading.Tasks;
 
 namespace Sorling.SqlExec.runner;
 
-public class SqlExecRunner : ISqlExecRunner
+public partial class SqlExecRunner(string sqlConnectionString) : ISqlExecRunner
 {
-   private readonly string _sqlconnectionstring;
-
-   public SqlExecRunner(string sqlConnectionString)
-      => _sqlconnectionstring = sqlConnectionString
+   private readonly string _sqlconnectionstring = sqlConnectionString
       ?? throw new ArgumentNullException(nameof(sqlConnectionString));
 
    protected virtual SqlConnection GetSqlConnection()
@@ -36,15 +33,14 @@ public class SqlExecRunner : ISqlExecRunner
    public IEnumerable<T> Query<T, P>(P parameters)
    where T : SqlExecBaseResult
    where P : SqlExecBaseCommand {
-      if (parameters is null)
-         throw new ArgumentNullException(nameof(parameters));
+      ArgumentNullException.ThrowIfNull(parameters);
 
       using SqlConnection sqlconnection = GetSqlConnection();
       using SqlCommand sqlcommand = CreatePreparedCommand(sqlconnection, parameters);
 
       OpenConnection(sqlconnection);
       using SqlDataReader sqldatareader = sqlcommand.ExecuteReader();
-      List<T> tor = new();
+      List<T> tor = [];
       while (sqldatareader.Read())
          tor.Add(sqldatareader.SqlExecMapRow<T>());
 
@@ -54,8 +50,7 @@ public class SqlExecRunner : ISqlExecRunner
    public T? QueryFirstRow<T, P>(P parameters)
       where T : SqlExecBaseResult
       where P : SqlExecBaseCommand {
-      if (parameters is null)
-         throw new ArgumentNullException(nameof(parameters));
+      ArgumentNullException.ThrowIfNull(parameters);
 
       using SqlConnection sqlconnection = GetSqlConnection();
       using SqlCommand sqlcommand = CreatePreparedCommand(sqlconnection, parameters);
@@ -69,8 +64,7 @@ public class SqlExecRunner : ISqlExecRunner
    public async Task<IEnumerable<T>> QueryAsync<T, P>(P parameters, CancellationToken cancellationToken = default)
       where T : SqlExecBaseResult
       where P : SqlExecBaseCommand {
-      if (parameters is null)
-         throw new ArgumentNullException(nameof(parameters));
+      ArgumentNullException.ThrowIfNull(parameters);
 
       using SqlConnection sqlconnection = GetSqlConnection();
       using SqlCommand sqlcommand = CreatePreparedCommand(sqlconnection, parameters);
@@ -79,7 +73,7 @@ public class SqlExecRunner : ISqlExecRunner
       using SqlDataReader sqldatareader = await sqlcommand
          .ExecuteReaderAsync(cancellationToken).ConfigureAwait(false);
 
-      List<T> tor = new();
+      List<T> tor = [];
       while (await sqldatareader.ReadAsync(cancellationToken).ConfigureAwait(false))
          tor.Add(sqldatareader.SqlExecMapRow<T>());
 
@@ -179,8 +173,7 @@ public class SqlExecRunner : ISqlExecRunner
       where T6 : SqlExecBaseResult
       where T7 : SqlExecBaseResult
       where P : SqlExecBaseCommand {
-      if (parameters is null)
-         throw new ArgumentNullException(nameof(parameters));
+      ArgumentNullException.ThrowIfNull(parameters);
 
       using SqlConnection sqlconnection = GetSqlConnection();
       using SqlCommand sqlcommand = CreatePreparedCommand(sqlconnection, parameters);
@@ -189,11 +182,11 @@ public class SqlExecRunner : ISqlExecRunner
       using SqlDataReader sqldatareader = sqlcommand
          .ExecuteReader();
 
-      List<T> tor = new();
+      List<T> tor = [];
       while (sqldatareader.Read())
          tor.Add(sqldatareader.SqlExecMapRow<T>());
 
-      List<T1> tor1 = new();
+      List<T1> tor1 = [];
       if (typeof(T1) != typeof(TQueryEmptyPlaceHolder)) {
          if (!sqldatareader.NextResult()) {
             throw new InvalidOperationException("There isn't a second record set in the query");
@@ -205,7 +198,7 @@ public class SqlExecRunner : ISqlExecRunner
       else
          return (tor, tor1, null, null, null, null, null, null);
 
-      List<T2> tor2 = new();
+      List<T2> tor2 = [];
       if (typeof(T2) != typeof(TQueryEmptyPlaceHolder)) {
          if (!sqldatareader.NextResult()) {
             throw new InvalidOperationException("There isn't a third record set in the query");
@@ -217,7 +210,7 @@ public class SqlExecRunner : ISqlExecRunner
       else
          return (tor, tor1, tor2, null, null, null, null, null);
 
-      List<T3> tor3 = new();
+      List<T3> tor3 = [];
       if (typeof(T3) != typeof(TQueryEmptyPlaceHolder)) {
          if (!sqldatareader.NextResult()) {
             throw new InvalidOperationException("There isn't a fourth record set in the query");
@@ -229,7 +222,7 @@ public class SqlExecRunner : ISqlExecRunner
       else
          return (tor, tor1, tor2, tor3, null, null, null, null);
 
-      List<T4> tor4 = new();
+      List<T4> tor4 = [];
       if (typeof(T4) != typeof(TQueryEmptyPlaceHolder)) {
          if (!sqldatareader.NextResult()) {
             throw new InvalidOperationException("There isn't a fifth record set in the query");
@@ -241,7 +234,7 @@ public class SqlExecRunner : ISqlExecRunner
       else
          return (tor, tor1, tor2, tor3, tor4, null, null, null);
 
-      List<T5> tor5 = new();
+      List<T5> tor5 = [];
       if (typeof(T5) != typeof(TQueryEmptyPlaceHolder)) {
          if (!sqldatareader.NextResult()) {
             throw new InvalidOperationException("There isn't a sixth record set in the query");
@@ -253,7 +246,7 @@ public class SqlExecRunner : ISqlExecRunner
       else
          return (tor, tor1, tor2, tor3, tor4, tor5, null, null);
 
-      List<T6> tor6 = new();
+      List<T6> tor6 = [];
       if (typeof(T6) != typeof(TQueryEmptyPlaceHolder)) {
          if (!sqldatareader.NextResult()) {
             throw new InvalidOperationException("There isn't a seventh record set in the query");
@@ -265,7 +258,7 @@ public class SqlExecRunner : ISqlExecRunner
       else
          return (tor, tor1, tor2, tor3, tor4, tor5, tor6, null);
 
-      List<T7> tor7 = new();
+      List<T7> tor7 = [];
       if (typeof(T7) != typeof(TQueryEmptyPlaceHolder)) {
          if (!sqldatareader.NextResult()) {
             throw new InvalidOperationException("There isn't a eighth record set in the query");
@@ -379,8 +372,7 @@ public class SqlExecRunner : ISqlExecRunner
       where T6 : SqlExecBaseResult
       where T7 : SqlExecBaseResult
       where P : SqlExecBaseCommand {
-      if (parameters is null)
-         throw new ArgumentNullException(nameof(parameters));
+      ArgumentNullException.ThrowIfNull(parameters);
 
       using SqlConnection sqlconnection = GetSqlConnection();
       using SqlCommand sqlcommand = CreatePreparedCommand(sqlconnection, parameters);
@@ -389,11 +381,11 @@ public class SqlExecRunner : ISqlExecRunner
       using SqlDataReader sqldatareader = await sqlcommand
          .ExecuteReaderAsync(cancellationToken).ConfigureAwait(false);
 
-      List<T> tor = new();
+      List<T> tor = [];
       while (await sqldatareader.ReadAsync(cancellationToken).ConfigureAwait(false))
          tor.Add(sqldatareader.SqlExecMapRow<T>());
 
-      List<T1> tor1 = new();
+      List<T1> tor1 = [];
       if (typeof(T1) != typeof(TQueryEmptyPlaceHolder)) {
          if (!await sqldatareader.NextResultAsync(cancellationToken).ConfigureAwait(false)) {
             throw new InvalidOperationException("There isn't a second record set in the query");
@@ -405,7 +397,7 @@ public class SqlExecRunner : ISqlExecRunner
       else
          return (tor, tor1, null, null, null, null, null, null);
 
-      List<T2> tor2 = new();
+      List<T2> tor2 = [];
       if (typeof(T2) != typeof(TQueryEmptyPlaceHolder)) {
          if (!await sqldatareader.NextResultAsync(cancellationToken).ConfigureAwait(false)) {
             throw new InvalidOperationException("There isn't a third record set in the query");
@@ -417,7 +409,7 @@ public class SqlExecRunner : ISqlExecRunner
       else
          return (tor, tor1, tor2, null, null, null, null, null);
 
-      List<T3> tor3 = new();
+      List<T3> tor3 = [];
       if (typeof(T3) != typeof(TQueryEmptyPlaceHolder)) {
          if (!await sqldatareader.NextResultAsync(cancellationToken).ConfigureAwait(false)) {
             throw new InvalidOperationException("There isn't a fourth record set in the query");
@@ -429,7 +421,7 @@ public class SqlExecRunner : ISqlExecRunner
       else
          return (tor, tor1, tor2, tor3, null, null, null, null);
 
-      List<T4> tor4 = new();
+      List<T4> tor4 = [];
       if (typeof(T4) != typeof(TQueryEmptyPlaceHolder)) {
          if (!await sqldatareader.NextResultAsync(cancellationToken).ConfigureAwait(false)) {
             throw new InvalidOperationException("There isn't a fifth record set in the query");
@@ -441,7 +433,7 @@ public class SqlExecRunner : ISqlExecRunner
       else
          return (tor, tor1, tor2, tor3, tor4, null, null, null);
 
-      List<T5> tor5 = new();
+      List<T5> tor5 = [];
       if (typeof(T5) != typeof(TQueryEmptyPlaceHolder)) {
          if (!await sqldatareader.NextResultAsync(cancellationToken).ConfigureAwait(false)) {
             throw new InvalidOperationException("There isn't a sixth record set in the query");
@@ -453,7 +445,7 @@ public class SqlExecRunner : ISqlExecRunner
       else
          return (tor, tor1, tor2, tor3, tor4, tor5, null, null);
 
-      List<T6> tor6 = new();
+      List<T6> tor6 = [];
       if (typeof(T6) != typeof(TQueryEmptyPlaceHolder)) {
          if (!await sqldatareader.NextResultAsync(cancellationToken).ConfigureAwait(false)) {
             throw new InvalidOperationException("There isn't a seventh record set in the query");
@@ -465,7 +457,7 @@ public class SqlExecRunner : ISqlExecRunner
       else
          return (tor, tor1, tor2, tor3, tor4, tor5, tor6, null);
 
-      List<T7> tor7 = new();
+      List<T7> tor7 = [];
       if (typeof(T7) != typeof(TQueryEmptyPlaceHolder)) {
          if (!await sqldatareader.NextResultAsync(cancellationToken).ConfigureAwait(false)) {
             throw new InvalidOperationException("There isn't a eighth record set in the query");
@@ -481,8 +473,7 @@ public class SqlExecRunner : ISqlExecRunner
    public async Task<T?> QueryFirstRowAsync<T, P>(P parameters, CancellationToken cancellationToken = default)
       where T : SqlExecBaseResult
       where P : SqlExecBaseCommand {
-      if (parameters is null)
-         throw new ArgumentNullException(nameof(parameters));
+      ArgumentNullException.ThrowIfNull(parameters);
 
       using SqlConnection sqlconnection = GetSqlConnection();
       using SqlCommand sqlcommand = CreatePreparedCommand(sqlconnection, parameters);
@@ -496,8 +487,7 @@ public class SqlExecRunner : ISqlExecRunner
    }
 
    public int Execute<P>(P parameters) where P : SqlExecBaseCommand {
-      if (parameters is null)
-         throw new ArgumentNullException(nameof(parameters));
+      ArgumentNullException.ThrowIfNull(parameters);
 
       using SqlConnection sqlconnection = GetSqlConnection();
       using SqlCommand sqlcommand = CreatePreparedCommand(sqlconnection, parameters);
@@ -510,16 +500,13 @@ public class SqlExecRunner : ISqlExecRunner
    }
 
    public int ExecuteGOScript<P>(P parameters) where P : SqlExecBaseCommand {
-      if (parameters is null)
-         throw new ArgumentNullException(nameof(parameters));
+      ArgumentNullException.ThrowIfNull(parameters);
 
-      List<string> scripts = new(
-         new Regex(@"\r{0,1}\n(?i)GO\r{0,1}\n")
+      List<string> scripts = [.. SQLGOScriptSplitRegex()
          .Split(parameters.SqlExecSqlText + "\r\n")
-         .Where(w => !string.IsNullOrWhiteSpace(w))
-         );
+         .Where(w => !string.IsNullOrWhiteSpace(w))];
 
-      if (!scripts.Any())
+      if (scripts.Count == 0)
          return 0;
 
       using SqlConnection sqlconnection = GetSqlConnection();
@@ -535,8 +522,7 @@ public class SqlExecRunner : ISqlExecRunner
    }
 
    public async Task<int> ExecuteAsync<P>(P parameters, CancellationToken cancellationToken = default) where P : SqlExecBaseCommand {
-      if (parameters is null)
-         throw new ArgumentNullException(nameof(parameters));
+      ArgumentNullException.ThrowIfNull(parameters);
 
       using SqlConnection sqlconnection = GetSqlConnection();
       using SqlCommand sqlcommand = CreatePreparedCommand(sqlconnection, parameters);
@@ -549,16 +535,13 @@ public class SqlExecRunner : ISqlExecRunner
    }
 
    public async Task<int> ExecuteGOScriptAsync<P>(P parameters, CancellationToken cancellationToken = default) where P : SqlExecBaseCommand {
-      if (parameters is null)
-         throw new ArgumentNullException(nameof(parameters));
+      ArgumentNullException.ThrowIfNull(parameters);
 
-      List<string> scripts = new(
-         new Regex(@"\r{0,1}\n(?i)GO\r{0,1}\n")
+      List<string> scripts = [.. SQLGOScriptSplitRegex()
          .Split(parameters.SqlExecSqlText + "\r\n")
-         .Where(w => !string.IsNullOrWhiteSpace(w))
-         );
+         .Where(w => !string.IsNullOrWhiteSpace(w))];
 
-      if (!scripts.Any())
+      if (scripts.Count == 0)
          return 0;
 
       using SqlConnection sqlconnection = GetSqlConnection();
@@ -576,8 +559,7 @@ public class SqlExecRunner : ISqlExecRunner
    }
 
    public T? ExecuteScalar<T, P>(P parameters) where P : SqlExecBaseCommand {
-      if (parameters is null)
-         throw new ArgumentNullException(nameof(parameters));
+      ArgumentNullException.ThrowIfNull(parameters);
 
       using SqlConnection sqlconnection = GetSqlConnection();
       using SqlCommand sqlcommand = CreatePreparedCommand(sqlconnection, parameters);
@@ -589,8 +571,7 @@ public class SqlExecRunner : ISqlExecRunner
    }
 
    public async Task<T?> ExecuteScalarAsync<T, P>(P parameters, CancellationToken cancellationToken = default) where P : SqlExecBaseCommand {
-      if (parameters is null)
-         throw new ArgumentNullException(nameof(parameters));
+      ArgumentNullException.ThrowIfNull(parameters);
 
       using SqlConnection sqlconnection = GetSqlConnection();
       using SqlCommand sqlcommand = CreatePreparedCommand(sqlconnection, parameters);
@@ -600,4 +581,7 @@ public class SqlExecRunner : ISqlExecRunner
 
       return MapScalar<T?>.MapScalarValue(tor);
    }
+
+   [GeneratedRegex(@"\r{0,1}\n(?i)GO\r{0,1}\n", RegexOptions.None, "sv-SE")]
+   private static partial Regex SQLGOScriptSplitRegex();
 }

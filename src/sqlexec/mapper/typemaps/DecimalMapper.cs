@@ -1,15 +1,13 @@
 ﻿using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace Sorling.SqlExec.mapper.typemaps;
 
-public class DecimalMapper : TypeMapperBase
+public class DecimalMapper(bool isNullAble) : TypeMapperBase
 {
    public override SqlDbType SqlDbType => SqlDbType.Decimal;
 
-   public override bool IsNullable { get; init; }
-
-   public DecimalMapper(bool isNullAble) => IsNullable = isNullAble;
+   public override bool IsNullable { get; init; } = isNullAble;
 
    public override object? GetInstanceValue(object? instance)
      => instance is not decimal ? null : instance;

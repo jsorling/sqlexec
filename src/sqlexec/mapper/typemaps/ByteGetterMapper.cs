@@ -1,13 +1,11 @@
 ﻿using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace Sorling.SqlExec.mapper.typemaps;
 
-public class ByteGetterMapper : TypeMapperBase
+public class ByteGetterMapper(bool isNullAble) : TypeMapperBase
 {
-   public override bool IsNullable { get; init; }
-
-   public ByteGetterMapper(bool isNullAble) => IsNullable = isNullAble;
+   public override bool IsNullable { get; init; } = isNullAble;
 
    public override SqlDbType SqlDbType => SqlDbType.TinyInt;
 

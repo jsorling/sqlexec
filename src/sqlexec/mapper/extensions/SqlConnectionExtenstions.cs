@@ -1,7 +1,7 @@
 ﻿using Sorling.SqlExec.mapper.commands;
 using System;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace Sorling.SqlExec.mapper.extensions;
 
@@ -9,8 +9,7 @@ public static class SqlConnectionExtenstions
 {
    public static SqlCommand SqlExecCreatePreparedCommand<P>(this SqlConnection sqlConnection, P parameters)
       where P : SqlExecBaseCommand {
-      if (parameters is null)
-         throw new ArgumentNullException(nameof(parameters));
+      ArgumentNullException.ThrowIfNull(parameters);
 
       SqlCommand sqlcommand = (sqlConnection
          ?? throw new ArgumentNullException(nameof(sqlConnection))).CreateCommand();

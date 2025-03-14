@@ -1,15 +1,13 @@
 ﻿using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace Sorling.SqlExec.mapper.typemaps;
 
-public class Int16Mapper : TypeMapperBase
+public class Int16Mapper(bool isNullAble) : TypeMapperBase
 {
    public override SqlDbType SqlDbType => SqlDbType.SmallInt;
 
-   public override bool IsNullable { get; init; }
-
-   public Int16Mapper(bool isNullAble) => IsNullable = isNullAble;
+   public override bool IsNullable { get; init; } = isNullAble;
 
    public override object? GetInstanceValue(object? instance)
      => instance is not short ? null : instance;
