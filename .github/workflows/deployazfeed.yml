@@ -28,6 +28,9 @@ jobs:
       uses: actions/upload-artifact@v4.6.1
       with:
         name: nugetpkg
-        path: ${{ env.NUGET_PACKAGE_PATH }}  
+        path: ${{ env.NUGET_PACKAGE_PATH }}
+    - name: List dir
+      run: gci -Recurse | Get-Item | Resolve-Path -Relative
+      shell: pwsh
     - name: Push nuget
       run: dotnet nuget push --api-key AzureArtifacts --source sorlingpublic "${{ env.NUGET_PACKAGE_PATH }}/**/*.nupkg"
