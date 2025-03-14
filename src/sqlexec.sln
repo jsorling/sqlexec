@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E1A3A4C2-C7C9-4A4C-BE1C-2789FBCD6182}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		nuget.config = nuget.config
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sqlExecTests", "sqlExecTests\sqlExecTests.csproj", "{4ED69ABF-1301-4D26-95F7-D3AC91FE5F48}"

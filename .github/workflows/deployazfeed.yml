@@ -8,7 +8,6 @@ env:
   WORKING_DIRECTORY: .
   PS_SOURCE_URL: "https://raw.githubusercontent.com/jsorling/miscscripts/main/github/actions"
   NUGET_AUTH_TOKEN: ${{ secrets.AZPUBLICFEEDPAT }}
-  AZURE_ARTIFACTS_FEED_URL: "https://pkgs.dev.azure.com/sorling/PublicFeed/_packaging/PublicFeed/nuget/v3/index.json"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -38,11 +37,10 @@ jobs:
       uses: actions/setup-dotnet@v3.3.1
       with:
         dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
-        source-url: ${{ env.AZURE_ARTIFACTS_FEED_URL }}
     - name: Download artifact from build job
       uses: actions/download-artifact@v4.1.9
       with:
         name: nugetpkg
         path: ${{ env.NUGET_PACKAGE_PATH }}
     - name: Push nuget
-      run: dotnet nuget push --api-key AzureArtifacts "${{ env.NUGET_PACKAGE_PATH }}/**/*.nupkg"
+      run: dotnet nuget push --api-key AzureArtifacts --source sorling_public "${{ env.NUGET_PACKAGE_PATH }}/**/*.nupkg"
