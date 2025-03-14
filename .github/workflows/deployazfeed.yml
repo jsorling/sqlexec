@@ -30,7 +30,7 @@ jobs:
         name: nugetpkg
         path: |
             ${{ env.NUGET_PACKAGE_PATH }}
-            ./nuget.config
+            nuget.config
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -44,5 +44,8 @@ jobs:
       with:
         name: nugetpkg
         path: ${{ env.NUGET_PACKAGE_PATH }}
+    - name: List dir
+      run: gci -Recurse | Get-Item | Resolve-Path -Relative
+      shell: pwsh
     - name: Push nuget
       run: dotnet nuget push --api-key AzureArtifacts --source sorling_public "${{ env.NUGET_PACKAGE_PATH }}/**/*.nupkg"
