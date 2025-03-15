@@ -27,7 +27,7 @@ jobs:
       with:
         name: nugetpkg
         path: ${{ env.NUGET_PACKAGE_PATH }}
-    - name: Set nuget add sources
-      run: dotnet nuget update source ${{ env.NUGET_SOURCE }} --UserName "jsorling" --Password ${{ secrets.azpublicfeedpat }}
+    - name: Update nuget source
+      run: dotnet nuget update source ${{ env.NUGET_SOURCE }} --username "jsorling" --password ${{ secrets.azpublicfeedpat }}
     - name: Push nuget
       run: dotnet nuget push --source ${{ env.NUGET_SOURCE }} --api-key AZ "${{ env.NUGET_PACKAGE_PATH }}/**/*.nupkg"
