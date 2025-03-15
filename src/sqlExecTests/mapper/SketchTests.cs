@@ -42,6 +42,6 @@ public class SketchTests
       con.Open();
       using SqlDataReader reader2 = com2.ExecuteReader();
       AnintAstring? aa2 = reader2.ReadRecordSetAsync<AnintAstring>().Result.FirstOrDefault();
-      Assert.IsTrue(aa2!.AnInt == 1);
+      Assert.AreEqual(1, aa2!.AnInt);
    }
 }

@@ -16,6 +16,6 @@ public class ScriptResourceTests
    public void ResourceScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       int? i = runner.ExecuteScalar<int?, ResCommand>(new());
-      Assert.IsTrue(i == 1);
+      Assert.AreEqual(1, i);
    }
 }

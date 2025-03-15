@@ -37,7 +37,7 @@ public class BinaryTests
    public void NullBinaryScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       byte[]? o = runner.ExecuteScalar<byte[]?, NullBinaryCommand>(new());
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 
    [TestMethod]
@@ -51,6 +51,6 @@ public class BinaryTests
    public void NullBinaryScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       byte[]? o = runner.ExecuteScalarAsync<byte[]?, NullBinaryCommand>(new()).Result;
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 }

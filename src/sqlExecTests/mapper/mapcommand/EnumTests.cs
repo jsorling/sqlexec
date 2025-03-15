@@ -62,15 +62,15 @@ public class EnumTests
    public void MapEnum() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       SqlGroupFlags o = runner.ExecuteScalar<SqlGroupFlags, EnumCmd>(new(SqlGroupFlags.Principals));
-      Assert.IsTrue(o == SqlGroupFlags.Principals);
+      Assert.AreEqual(SqlGroupFlags.Principals, o);
    }
 
    [TestMethod]
    public void MapEnumNull() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       SqlGroupFlags? o = runner.ExecuteScalar<SqlGroupFlags?, EnumNullCmd>(new(null));
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
       o = runner.ExecuteScalar<SqlGroupFlags?, EnumNullCmd>(new(SqlGroupFlags.AppRoles));
-      Assert.IsTrue(o == SqlGroupFlags.AppRoles);
+      Assert.AreEqual(SqlGroupFlags.AppRoles, o);
    }
 }

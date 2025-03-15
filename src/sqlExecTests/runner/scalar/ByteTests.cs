@@ -14,14 +14,14 @@ public class ByteTests
    public void ByteScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       byte? o = runner.ExecuteScalar<byte?, ByteCommand>(new());
-      Assert.IsTrue(o == 3);
+      Assert.AreEqual(3, o);
    }
 
    [TestMethod]
    public void ByteNonNullableScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       byte o = runner.ExecuteScalar<byte, ByteCommand>(new());
-      Assert.IsTrue(o == 3);
+      Assert.AreEqual(3, o);
    }
 
    public record NullByteCommand() : SqlExecBaseCommand
@@ -35,20 +35,20 @@ public class ByteTests
    public void NullByteScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       byte? o = runner.ExecuteScalar<byte?, NullByteCommand>(new());
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 
    [TestMethod]
    public void ByteScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       byte? o = runner.ExecuteScalarAsync<byte?, ByteCommand>(new()).Result;
-      Assert.IsTrue(o == 3);
+      Assert.AreEqual(3, o);
    }
 
    [TestMethod]
    public void NullByteScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       byte? o = runner.ExecuteScalarAsync<byte?, NullByteCommand>(new()).Result;
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 }

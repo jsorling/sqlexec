@@ -13,14 +13,14 @@ public class FloatTests
    public void FloatScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       float? o = runner.ExecuteScalar<float?, FloatCommand>(new());
-      Assert.IsTrue((int)o!.Value == 8);
+      Assert.AreEqual(8, (int)o!.Value);
    }
 
    [TestMethod]
    public void FloatNonNullableScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       float o = runner.ExecuteScalar<float, FloatCommand>(new());
-      Assert.IsTrue((int)o == 8);
+      Assert.AreEqual(8, (int)o);
    }
 
    public record NullFloatCommand() : SqlExecBaseCommand
@@ -34,20 +34,20 @@ public class FloatTests
    public void NullFloatScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       float? o = runner.ExecuteScalar<float?, NullFloatCommand>(new());
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 
    [TestMethod]
    public void FloatScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       float? o = runner.ExecuteScalarAsync<float?, FloatCommand>(new()).Result;
-      Assert.IsTrue((int)o!.Value == 8);
+      Assert.AreEqual(8, (int)o!.Value);
    }
 
    [TestMethod]
    public void NullFloatScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       float? o = runner.ExecuteScalarAsync<float?, NullFloatCommand>(new()).Result;
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 }

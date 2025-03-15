@@ -14,14 +14,14 @@ public class SqlSessionCtxTests
    public void GetSessionScalar() {
       SqlSessionCtxRunner runner = new(TestsInitialize.ConnectionString, new() { { "SqlSessionCtxRunner", "1005" } });
       string? o = runner.ExecuteScalar<string, StringCommand>(new());
-      Assert.IsTrue(o == "1005");
+      Assert.AreEqual("1005", o);
    }
 
    [TestMethod]
    public void GetSessionScalarAsync() {
       SqlSessionCtxRunner runner = new(TestsInitialize.ConnectionString, new() { { "SqlSessionCtxRunner", "1005" } });
       string? o = runner.ExecuteScalarAsync<string, StringCommand>(new()).Result;
-      Assert.IsTrue(o == "1005");
+      Assert.AreEqual("1005", o);
    }
 
    public record SessionCtxCmd([SqlSource("@key", "nvarchar(130) null ", "0")] string? Key) : SqlExecBaseCommand
@@ -40,6 +40,6 @@ public class SqlSessionCtxTests
    public void GetSessionScalaSPAsync() {
       SqlSessionCtxRunner runner = new(TestsInitialize.ConnectionString, new() { { "SqlSessionCtxRunner", "1005" } });
       SessionCtxCmd.ResultSet0? res = runner.QueryFirstRow<SessionCtxCmd.ResultSet0, SessionCtxCmd>(new("SqlSessionCtxRunner"));
-      Assert.IsTrue(res!.SessionValue == "1005");
+      Assert.AreEqual("1005", res!.SessionValue);
    }
 }

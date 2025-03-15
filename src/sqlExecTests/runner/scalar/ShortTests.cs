@@ -14,14 +14,14 @@ public class ShortTests
    public void ShortScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       short? o = runner.ExecuteScalar<short?, ShortCommand>(new());
-      Assert.IsTrue(o == 3);
+      Assert.AreEqual(3, o);
    }
 
    [TestMethod]
    public void ShortNonNullableScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       short o = runner.ExecuteScalar<short, ShortCommand>(new());
-      Assert.IsTrue(o == 3);
+      Assert.AreEqual(3, o);
    }
 
    public record NullShortCommand() : SqlExecBaseCommand
@@ -35,20 +35,20 @@ public class ShortTests
    public void NullShortScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       short? o = runner.ExecuteScalar<short?, NullShortCommand>(new());
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 
    [TestMethod]
    public void ShortScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       short? o = runner.ExecuteScalarAsync<short?, ShortCommand>(new()).Result;
-      Assert.IsTrue(o == 3);
+      Assert.AreEqual(3, o);
    }
 
    [TestMethod]
    public void NullShortScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       short? o = runner.ExecuteScalarAsync<short?, NullShortCommand>(new()).Result;
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 }

@@ -23,7 +23,7 @@ public class TimeSpanTests
    public void TimeNonNullableSpanScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       TimeSpan o = runner.ExecuteScalar<TimeSpan, TimeSpanCommand>(new());
-      Assert.IsTrue(o.Hours == 11);
+      Assert.AreEqual(11, o.Hours);
    }
 
    public record NullTimeSpanCommand() : SqlExecBaseCommand
@@ -37,7 +37,7 @@ public class TimeSpanTests
    public void NullTimeSpanScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       TimeSpan? o = runner.ExecuteScalar<TimeSpan?, NullTimeSpanCommand>(new());
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 
    [TestMethod]
@@ -51,6 +51,6 @@ public class TimeSpanTests
    public void NullTimeSpanScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       TimeSpan? o = runner.ExecuteScalarAsync<TimeSpan?, NullTimeSpanCommand>(new()).Result;
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 }

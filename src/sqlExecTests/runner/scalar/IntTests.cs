@@ -14,14 +14,14 @@ public class IntTests
    public void IntScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       int? o = runner.ExecuteScalar<int?, IntCommand>(new());
-      Assert.IsTrue(o == 3);
+      Assert.AreEqual(3, o);
    }
 
    [TestMethod]
    public void IntNonNullableScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       int o = runner.ExecuteScalar<int, IntCommand>(new());
-      Assert.IsTrue(o == 3);
+      Assert.AreEqual(3, o);
    }
 
    public record NullIntCommand() : SqlExecBaseCommand
@@ -35,20 +35,20 @@ public class IntTests
    public void NullIntScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       int? o = runner.ExecuteScalar<int?, NullIntCommand>(new());
-      Assert.IsTrue(o == null);
+      Assert.IsNull(o);
    }
 
    [TestMethod]
    public void IntScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       int? o = runner.ExecuteScalarAsync<int?, IntCommand>(new()).Result;
-      Assert.IsTrue(o == 3);
+      Assert.AreEqual(3, o);
    }
 
    [TestMethod]
    public void NullIntScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       int? o = runner.ExecuteScalarAsync<int?, NullIntCommand>(new()).Result;
-      Assert.IsTrue(o == null);
+      Assert.IsNull(o);
    }
 }

@@ -72,6 +72,6 @@ public class EnumTests
    public void MapEnumLong() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       IEnumerable<EnumLongResult> res = runner.Query<EnumLongResult, EnumLongCommand>(new());
-      Assert.IsTrue(res.First().EnumLong == EnumLong.More);
+      Assert.AreEqual(EnumLong.More, res.First().EnumLong);
    }
 }

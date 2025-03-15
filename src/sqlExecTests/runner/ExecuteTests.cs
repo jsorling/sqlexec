@@ -14,14 +14,14 @@ public class ExecuteTests
    public void Execute1() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       int i = runner.Execute<Exec1Command>(new());
-      Assert.IsTrue(i == -1);
+      Assert.AreEqual(-1, i);
    }
 
    [TestMethod]
    public void Execute1Async() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       int i = runner.ExecuteAsync<Exec1Command>(new()).Result;
-      Assert.IsTrue(i == -1);
+      Assert.AreEqual(-1, i);
    }
 
    public record Exec2Command() : ScriptFileCommand
@@ -33,14 +33,14 @@ public class ExecuteTests
    public void Execute2() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       int i = runner.Execute<Exec2Command>(new());
-      Assert.IsTrue(i == -1);
+      Assert.AreEqual(-1, i);
    }
 
    [TestMethod]
    public void Execute2Async() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       int i = runner.ExecuteAsync<Exec2Command>(new()).Result;
-      Assert.IsTrue(i == -1);
+      Assert.AreEqual(-1, i);
    }
 
    public record Exec3Command() : ScriptFileCommand
@@ -52,14 +52,14 @@ public class ExecuteTests
    public void Execute3() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       int i = runner.ExecuteGOScript<Exec3Command>(new());
-      Assert.IsTrue(i == 5);
+      Assert.AreEqual(5, i);
    }
 
    [TestMethod]
    public void Execute3Async() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       int i = runner.ExecuteGOScriptAsync<Exec3Command>(new()).Result;
-      Assert.IsTrue(i == 5);
+      Assert.AreEqual(5, i);
    }
 
    public record Query4Result(int AnInt, string AString) : SqlExecBaseResult;

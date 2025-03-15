@@ -14,14 +14,14 @@ public class CharTests
    public void CharScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       char? o = runner.ExecuteScalar<char?, CharCommand>(new());
-      Assert.IsTrue(o != null);
+      Assert.IsNotNull(o);
    }
 
    [TestMethod]
    public void CharNonNullableScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       char o = runner.ExecuteScalar<char, CharCommand>(new());
-      Assert.IsTrue(o == '1');
+      Assert.AreEqual('1', o);
    }
 
    public record NullCharCommand() : SqlExecBaseCommand
@@ -35,20 +35,20 @@ public class CharTests
    public void NullCharScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       char? o = runner.ExecuteScalar<char?, NullCharCommand>(new());
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 
    [TestMethod]
    public void CharScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       char? o = runner.ExecuteScalarAsync<char?, CharCommand>(new()).Result;
-      Assert.IsTrue(o != null);
+      Assert.IsNotNull(o);
    }
 
    [TestMethod]
    public void NullCharScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       char? o = runner.ExecuteScalarAsync<char?, NullCharCommand>(new()).Result;
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 }

@@ -14,14 +14,14 @@ public class DecimalTests
    public void DecimalScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       decimal? o = runner.ExecuteScalar<decimal?, DecimalCommand>(new());
-      Assert.IsTrue(o != null);
+      Assert.IsNotNull(o);
    }
 
    [TestMethod]
    public void DecimalNonNullableScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       decimal o = runner.ExecuteScalar<decimal, DecimalCommand>(new());
-      Assert.IsTrue((int)o == 8);
+      Assert.AreEqual(8, (int)o);
    }
 
    public record NullDecimalCommand() : SqlExecBaseCommand
@@ -35,20 +35,20 @@ public class DecimalTests
    public void NullDecimalScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       decimal? o = runner.ExecuteScalar<decimal?, NullDecimalCommand>(new());
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 
    [TestMethod]
    public void DecimalScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       decimal? o = runner.ExecuteScalarAsync<decimal?, DecimalCommand>(new()).Result;
-      Assert.IsTrue(o != null);
+      Assert.IsNotNull(o);
    }
 
    [TestMethod]
    public void NullDecimalScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       decimal? o = runner.ExecuteScalarAsync<decimal?, NullDecimalCommand>(new()).Result;
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 }

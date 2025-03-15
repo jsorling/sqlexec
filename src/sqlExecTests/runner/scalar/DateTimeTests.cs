@@ -23,7 +23,7 @@ public class DateTimeTests
    public void DateTimeNonNullableScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       DateTime o = runner.ExecuteScalar<DateTime, DateTimeCommand>(new());
-      Assert.IsTrue(o.Year == 2005);
+      Assert.AreEqual(2005, o.Year);
    }
 
    public record NullDateTimeCommand() : SqlExecBaseCommand
@@ -37,7 +37,7 @@ public class DateTimeTests
    public void NullDateTimeScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       DateTime? o = runner.ExecuteScalar<DateTime?, NullDateTimeCommand>(new());
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 
    [TestMethod]
@@ -51,6 +51,6 @@ public class DateTimeTests
    public void NullDateTimeScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       DateTime? o = runner.ExecuteScalarAsync<DateTime?, NullDateTimeCommand>(new()).Result;
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 }

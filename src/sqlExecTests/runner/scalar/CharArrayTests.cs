@@ -14,7 +14,7 @@ public class CharArrayTests
    public void CharArrayScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       char[]? o = runner.ExecuteScalar<char[]?, CharArrayCommand>(new());
-      Assert.IsTrue(o != null);
+      Assert.IsNotNull(o);
    }
 
    [TestMethod]
@@ -23,7 +23,7 @@ public class CharArrayTests
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
       char[] o = runner.ExecuteScalar<char[], CharArrayCommand>(new());
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-      Assert.IsTrue(o != null);
+      Assert.IsNotNull(o);
    }
 
    public record NullCharArrayCommand() : SqlExecBaseCommand
@@ -37,20 +37,20 @@ public class CharArrayTests
    public void NullCharArrayScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       char[]? o = runner.ExecuteScalar<char[]?, NullCharArrayCommand>(new());
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 
    [TestMethod]
    public void CharArrayScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       char[]? o = runner.ExecuteScalarAsync<char[], CharArrayCommand>(new()).Result;
-      Assert.IsTrue(o != null);
+      Assert.IsNotNull(o);
    }
 
    [TestMethod]
    public void NullCharArrayScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       char[]? o = runner.ExecuteScalarAsync<char[]?, NullCharArrayCommand>(new()).Result;
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 }

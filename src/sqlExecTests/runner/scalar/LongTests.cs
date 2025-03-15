@@ -14,14 +14,14 @@ public class LongTests
    public void LongScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       long? o = runner.ExecuteScalar<long?, LongCommand>(new());
-      Assert.IsTrue(o == 123);
+      Assert.AreEqual(123, o);
    }
 
    [TestMethod]
    public void LongNonNullableScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       long o = runner.ExecuteScalar<long, LongCommand>(new());
-      Assert.IsTrue(o == 123);
+      Assert.AreEqual(123, o);
    }
 
    public record NullLongCommand() : SqlExecBaseCommand
@@ -35,20 +35,20 @@ public class LongTests
    public void NullLongScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       long? o = runner.ExecuteScalar<long?, NullLongCommand>(new());
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 
    [TestMethod]
    public void LongScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       long? o = runner.ExecuteScalarAsync<long?, LongCommand>(new()).Result;
-      Assert.IsTrue(o == 123);
+      Assert.AreEqual(123, o);
    }
 
    [TestMethod]
    public void NullLongScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       long? o = runner.ExecuteScalarAsync<long?, NullLongCommand>(new()).Result;
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 }

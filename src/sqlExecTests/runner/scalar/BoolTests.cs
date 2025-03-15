@@ -35,7 +35,7 @@ public class BoolTests
    public void NullBoolScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       bool? o = runner.ExecuteScalar<bool?, NullBoolCommand>(new());
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 
    [TestMethod]
@@ -49,6 +49,6 @@ public class BoolTests
    public void NullBoolScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       bool? o = runner.ExecuteScalarAsync<bool?, NullBoolCommand>(new()).Result;
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 }

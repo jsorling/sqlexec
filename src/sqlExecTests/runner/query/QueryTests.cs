@@ -129,9 +129,9 @@ public class QueryTests
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       IEnumerable<QueryNullParameterCommand.QueryNullParameterResult> res
          = runner.QueryAsync<QueryNullParameterCommand.QueryNullParameterResult, QueryNullParameterCommand>(new(null)).Result;
-      Assert.IsTrue(res.First().AnInt == 1);
+      Assert.AreEqual(1, res.First().AnInt);
 
       res = runner.QueryAsync<QueryNullParameterCommand.QueryNullParameterResult, QueryNullParameterCommand>(new(3)).Result;
-      Assert.IsTrue(res.First().AnInt == 3);
+      Assert.AreEqual(3, res.First().AnInt);
    }
 }

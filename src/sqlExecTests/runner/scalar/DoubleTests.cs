@@ -14,14 +14,14 @@ public class DoubleTests
    public void DoubleScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       double? o = runner.ExecuteScalar<double?, DoubleCommand>(new());
-      Assert.IsTrue(o != null);
+      Assert.IsNotNull(o);
    }
 
    [TestMethod]
    public void DoubleNonNullableScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       double o = runner.ExecuteScalar<double, DoubleCommand>(new());
-      Assert.IsTrue((int)o == 8);
+      Assert.AreEqual(8, (int)o);
    }
 
    public record NullDoubleCommand() : SqlExecBaseCommand
@@ -35,20 +35,20 @@ public class DoubleTests
    public void NullDoubleScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       double? o = runner.ExecuteScalar<double?, NullDoubleCommand>(new());
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 
    [TestMethod]
    public void DoubleScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       double? o = runner.ExecuteScalarAsync<double?, DoubleCommand>(new()).Result;
-      Assert.IsTrue(o != null);
+      Assert.IsNotNull(o);
    }
 
    [TestMethod]
    public void NullDoubleScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       double? o = runner.ExecuteScalarAsync<double?, NullDoubleCommand>(new()).Result;
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 }

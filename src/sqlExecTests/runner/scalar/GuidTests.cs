@@ -37,7 +37,7 @@ public class GuidTests
    public void NullGuidScalar() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       Guid? o = runner.ExecuteScalar<Guid?, NullGuidCommand>(new());
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 
    [TestMethod]
@@ -51,6 +51,6 @@ public class GuidTests
    public void NullGuidScalarAsync() {
       SqlExecRunner runner = new(TestsInitialize.ConnectionString);
       Guid? o = runner.ExecuteScalarAsync<Guid?, NullGuidCommand>(new()).Result;
-      Assert.IsTrue(o is null);
+      Assert.IsNull(o);
    }
 }
