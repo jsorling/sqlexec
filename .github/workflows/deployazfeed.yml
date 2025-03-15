@@ -30,6 +30,6 @@ jobs:
       run: gci -Recurse | Get-Item | Resolve-Path -Relative
       shell: pwsh
     - name: Push nuget to github
-      run: dotnet nuget add source --username jsorling --password ${{ secrets.NugetPKGWrite }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/jsorling/index.json"
+      run: dotnet nuget add source --username jsorling --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/jsorling/index.json"
     - name: Push nuget
       run: dotnet nuget push --source github "${{ env.NUGET_PACKAGE_PATH }}/**/*.nupkg"
