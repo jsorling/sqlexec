@@ -21,13 +21,21 @@ jobs:
       run: '& iex ((New-Object System.Net.WebClient).DownloadString("$env:PS_SOURCE_URL/buildinfo.ps1"))'
       shell: pwsh
     - name: Pack
-      run: dotnet pack src/sqlexec/sqlexec.mapper.csproj --configuration ${{ env.CONFIGURATION }} --output "${{ env.NUGET_PACKAGE_PATH }}"
+      run: dotnet pack src/sqlexec/sqlexec.mapper.csproj 
+        --configuration ${{ env.CONFIGURATION }} 
+        --output "${{ env.NUGET_PACKAGE_PATH }}"
     - name: Publish Artifacts
       uses: actions/upload-artifact@v4.6.1
       with:
         name: nugetpkg
         path: ${{ env.NUGET_PACKAGE_PATH }}
     - name: Update nuget source
-      run: dotnet nuget update source ${{ env.NUGET_SOURCE }} --username "jsorling" --password ${{ secrets.azpublicfeedpat }} --store-password-in-clear-text
+      run: dotnet nuget update source ${{ env.NUGET_SOURCE }} 
+        --username "jsorling" 
+        --password ${{ secrets.AZPUBLICFEEDPAT }} 
+        --store-password-in-clear-text
     - name: Push nuget
-      run: dotnet nuget push --source ${{ env.NUGET_SOURCE }} --api-key AZ "${{ env.NUGET_PACKAGE_PATH }}/**/*.nupkg"
+      run: dotnet nuget push 
+        --source ${{ env.NUGET_SOURCE }} 
+        --api-key AZ 
+        "${{ env.NUGET_PACKAGE_PATH }}/**/*.nupkg"
